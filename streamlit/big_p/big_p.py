@@ -3,7 +3,7 @@
 import streamlit as st
 import altair as alt
 import pandas as pd
-import plotly.express as px
+# import plotly.express as px
 
 st.set_page_config(layout='wide')
 

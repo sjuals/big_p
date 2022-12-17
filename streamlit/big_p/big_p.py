@@ -79,7 +79,7 @@ m.save('map.html')
 import streamlit.components.v1 as components
 p = open('map.html', encoding='utf-8')
 
-st.header('서구 쌍촌동 설치 현황')
+st.header('서구 쌍촌동 카페 및 설치 현황')
 components.html(p.read(), width=950, height=650)
 st.markdown('### 기기 정보')
 cc

@@ -1,3 +1,4 @@
 scikit-learn
 plotly
 folium
+-m pip install --upgrade pip

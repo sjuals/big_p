@@ -1,5 +1,5 @@
 # streamlit run streamlit\big_p\big_p.py
-
+import sklean
 import streamlit as st
 import altair as alt
 import pandas as pd

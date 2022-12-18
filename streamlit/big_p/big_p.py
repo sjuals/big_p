@@ -108,8 +108,13 @@ st.bar_chart(end['등록인구 (명)'], use_container_width=True, height=550)
 
 import seaborn as sns
 import matplotlib.pyplot as plt
-# 이미지 해상도 높이기 
-# %config InlineBackend.figure_format = 'retina'
+from tempfile import NamedTemporaryFile
+import matplotlib.font_manager as fm
+# Font loading 
+fm.get_fontconfig_fonts()
+font_location = 'streamlit/big_p/NanumBarunGothicLight.ttf' 
+font_name = fm.FontProperties(fname=font_location).get_name()
+plt.rc('font', family=font_name)
 #한글
 plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False

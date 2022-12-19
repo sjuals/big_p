@@ -32,12 +32,12 @@ with st.sidebar:
     
     
 # main
-st.title('다회용컵 대여·반납기 입지선정 분석 결과 보고서')
+st.title('다회용컵 대여·반납기 입지선정 분석')
 
-# st.header('지역별(동) 최적 설치 지수')
 end = pd.read_csv('streamlit/big_p/end.csv', encoding='cp949')
 end.rename(columns={'y':'지수'}, inplace=True)
 end = end.sort_values(by='지수', ascending=False)
+end = end.drop(['인구밀도 (명/㎢)', '평균연령 (세)'], axis=1)
 end.reset_index(drop=True, inplace=True)
 # checkbox를 선택하면 원본 데이터프레임이 나타남
 if st.checkbox('원본 데이터 보기'):
@@ -67,7 +67,7 @@ df = pd.read_csv('streamlit/big_p/서구 쌍촌동.csv')
 df = df[['경도', '위도', '상호명']]
 
 
-
+cc['기기상태'] = ['정상', '점검중', '고장', '정상', '정상']
 
 # 지도
 import folium
@@ -76,7 +76,7 @@ from folium.plugins import MarkerCluster
 m = folium.Map(location=[35.152421, 126.855071], tiles='openstreetmap', zoom_start=15)
  
 for i in range(len(cc)):
-    folium.Marker([cc.iloc[i][1], cc.iloc[i][0]], popup=cc.index[i], icon=folium.Icon(color='red')).add_to(m)
+    folium.Marker([cc.iloc[i][1], cc.iloc[i][0]], popup=(cc.index[i],cc['기기상태'].iloc[i]), icon=folium.Icon(color='red')).add_to(m)
 
 mc = MarkerCluster()
 for x in range(len(df)):
@@ -85,6 +85,16 @@ for x in range(len(df)):
 m.add_child(mc)
 
 m.save('map.html')
+
+
+
+
+# selectbox를 사용하여 '호선' 선택: 데이터프레임은 바로 이전에 사용한 최종 데이터프레임 사용
+# .unique() 매소드를 사용하여 selectbox에 호선이 각각 하나만 나타나게 함
+option = st.selectbox('지역(동) 선택',end['지역'].unique())
+end_selected = end.loc[(end['지역'] == option)]
+st.write(option, '데이터', end_selected)
+
 
 
 
@@ -98,36 +108,117 @@ st.markdown('### 기기 정보')
 cc
 
 
-st.markdown('### 지역별 인구정보')
+
+end[['등록인구 (명)', '탑승량', '플라스틱 배출량', '카페수', '편의점수', '유동인구', '의료기관 수', '대학교 수', '지수']].astype(int)
+
+# 차트
+st.header('■ 지역별 변수 분석')
+
+
+
+st.markdown('### 인구정보')
+
+if st.checkbox('인구정보 데이터 보기'):
+    st.dataframe(end[['지역', '등록인구 (명)']])
+
 end.index = end['지역']
 end = end.sort_values(by='등록인구 (명)', ascending=False)
 st.bar_chart(end['등록인구 (명)'], use_container_width=True, height=550)
 
 
 
+st.markdown('### 대중교통 탑승량')
 
-import seaborn as sns
-import matplotlib.pyplot as plt
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('대중교통 탑승량 데이터 보기'):
+    st.dataframe(end[['지역', '탑승량']])
 
-#한글
-plt.rcParams['font.family'] = 'Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
-
-
-# # val_count  = end['column_name'].value_counts()
-# fig = plt.figure(figsize=(18,5))
-# plt.xticks(rotation=90)
-# sns.barplot(x= end['지역'], y=end['등록인구 (명)'])
-# plt.ylabel('등록인구(명)', fontsize=12)
-# plt.xlabel('지역(동)', fontsize=12)
-# st.pyplot(fig)
+end.index = end['지역']
+end = end.sort_values(by='탑승량', ascending=False)
+st.bar_chart(end['탑승량'], use_container_width=True, height=550)
 
 
 
-# fig = plt.figure(figsize=(18,5))
-# plt.xticks(rotation=90)
-# plt.bar(x=end['지역'], height=end['등록인구 (명)'])
-# plt.ylabel('등록인구(명)', fontsize=12)
-# plt.xlabel('지역(동)', fontsize=12)
-# plt.xlim(-0.5,66.5)
-# st.pyplot(fig)
+st.markdown('### 플라스틱 배출량')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('플라스틱 배출량 데이터 보기'):
+    st.dataframe(end[['지역', '플라스틱 배출량']])
+
+end.index = end['지역']
+end = end.sort_values(by='플라스틱 배출량', ascending=False)
+st.bar_chart(end['플라스틱 배출량'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 카페 수')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('카페 수 데이터 보기'):
+    st.dataframe(end[['지역', '카페수']])
+
+end.index = end['지역']
+end = end.sort_values(by='카페수', ascending=False)
+st.bar_chart(end['카페수'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 편의점 수')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('편의점 수 데이터 보기'):
+    st.dataframe(end[['지역', '편의점수']])
+
+end.index = end['지역']
+end = end.sort_values(by='편의점수', ascending=False)
+st.bar_chart(end['편의점수'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 유동인구')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('유동인구 데이터 보기'):
+    st.dataframe(end[['지역', '유동인구']])
+
+end.index = end['지역']
+end = end.sort_values(by='유동인구', ascending=False)
+st.bar_chart(end['유동인구'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 의료기관 수')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('의료기관 수 데이터 보기'):
+    st.dataframe(end[['지역', '의료기관 수']])
+
+end.index = end['지역']
+end = end.sort_values(by='의료기관 수', ascending=False)
+st.bar_chart(end['의료기관 수'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 대학교 수')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('대학교 수 데이터 보기'):
+    st.dataframe(end[['지역', '대학교 수']])
+
+end.index = end['지역']
+end = end.sort_values(by='대학교 수', ascending=False)
+st.bar_chart(end['대학교 수'], use_container_width=True, height=550)
+
+
+
+st.markdown('### 입지선정 지수')
+
+end.reset_index(drop=True, inplace=True)
+if st.checkbox('입지선정 지수 데이터 보기'):
+    st.dataframe(end[['지역', '지수']])
+
+end.index = end['지역']
+end = end.sort_values(by='지수', ascending=False)
+st.bar_chart(end['지수'], use_container_width=True, height=550)
+
+

@@ -68,7 +68,8 @@ df = df[['경도', '위도', '상호명']]
 
 
 cc['기기상태'] = ['정상', '점검중', '고장', '정상', '정상']
-
+cc['컵 잔여량'] = [1561, 220, 3000, 231, 0]
+cc['컵 반납용량'] = [1, 0.8, 0.2, 0.1, 0]
 # 지도
 import folium
 from folium.plugins import MarkerCluster

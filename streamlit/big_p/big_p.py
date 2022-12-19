@@ -27,7 +27,7 @@ with st.sidebar:
     ''')    
 
     
-st.title('다회용 컵 대여·반납기 정보')
+st.title('다회용 컵 대여·반납기 솔루션')
     
 tab1, tab2, tab3 = st.tabs(['입지선정', '변수 분석', '측정 결과'])
 

@@ -229,3 +229,6 @@ with tab2:
 
 with tab3:   
     st.header('■ 측정 결과')
+    st.markdown('### 1. 탄소 저감량')
+    st.markdown('### 2. 재활용률')
+    st.markdown('### 3. 폐기량 변화량')

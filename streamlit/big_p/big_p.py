@@ -108,32 +108,26 @@ st.bar_chart(end['등록인구 (명)'], use_container_width=True, height=550)
 
 import seaborn as sns
 import matplotlib.pyplot as plt
-from tempfile import NamedTemporaryFile
-import matplotlib.font_manager as fm
-# Font loading 
-fm.get_fontconfig_fonts()
-font_location = 'streamlit/big_p/NanumBarunGothicLight.ttf' 
-font_name = fm.FontProperties(fname=font_location).get_name()
-plt.rc('font', family=font_name)
+
 #한글
 plt.rcParams['font.family'] = 'Malgun Gothic'
 plt.rcParams['axes.unicode_minus'] = False
 
 
-# val_count  = end['column_name'].value_counts()
-fig = plt.figure(figsize=(18,5))
-plt.xticks(rotation=90)
-sns.barplot(x= end['지역'], y=end['등록인구 (명)'])
-plt.ylabel('등록인구(명)', fontsize=12)
-plt.xlabel('지역(동)', fontsize=12)
-st.pyplot(fig)
+# # val_count  = end['column_name'].value_counts()
+# fig = plt.figure(figsize=(18,5))
+# plt.xticks(rotation=90)
+# sns.barplot(x= end['지역'], y=end['등록인구 (명)'])
+# plt.ylabel('등록인구(명)', fontsize=12)
+# plt.xlabel('지역(동)', fontsize=12)
+# st.pyplot(fig)
 
 
 
-fig = plt.figure(figsize=(18,5))
-plt.xticks(rotation=90)
-plt.bar(x=end['지역'], height=end['등록인구 (명)'])
-plt.ylabel('등록인구(명)', fontsize=12)
-plt.xlabel('지역(동)', fontsize=12)
-plt.xlim(-0.5,66.5)
-st.pyplot(fig)
+# fig = plt.figure(figsize=(18,5))
+# plt.xticks(rotation=90)
+# plt.bar(x=end['지역'], height=end['등록인구 (명)'])
+# plt.ylabel('등록인구(명)', fontsize=12)
+# plt.xlabel('지역(동)', fontsize=12)
+# plt.xlim(-0.5,66.5)
+# st.pyplot(fig)

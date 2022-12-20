@@ -149,7 +149,7 @@ with tab1:
         html = fancy_html(i)
         iframe = branca.element.IFrame(html=html,width=350,height=150)
         popup = folium.Popup(iframe,parse_html=True)
-        folium.Marker([cc.iloc[i][1], cc.iloc[i][0]], popup=popup, icon=folium.Icon(color=color)).add_to(m)
+        folium.Marker([cc.iloc[i][1], cc.iloc[i][0]],tooltip=(cc.index[i],cc['기기상태'].iloc[i]), popup=popup, icon=folium.Icon(color=color)).add_to(m)
 
 
 

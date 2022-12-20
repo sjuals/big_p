@@ -131,7 +131,7 @@ with tab1:
     import folium
     from folium.plugins import MarkerCluster
 
-    m = folium.Map(location=[35.152421, 126.855071], tiles='openstreetmap', zoom_start=15)
+    m = folium.Map(location=[df['위도'].mean(), df['경도'].mean()], tiles='openstreetmap', zoom_start=15)
 
     for i in range(len(cc)):
         num_of_casualties1 = cc.index[i]
@@ -166,11 +166,14 @@ with tab1:
             color = 'purple'
         else:
             color = 'red'
-        folium.Circle(location = [df.iloc[x][1], df.iloc[x][0]], popup=df['상호명'].iloc[x], color=color, radius=3).add_to(m)
+        iframe = folium.IFrame(df['상호명'].iloc[x])
+        popup = folium.Popup(iframe, min_width=100, max_width=100)
+        folium.Circle(location = [df.iloc[x][1], df.iloc[x][0]], popup=popup, color=color, radius=3).add_to(m)
+#         folium.Circle(location = [df.iloc[x][1], df.iloc[x][0]], popup=df['상호명'].iloc[x], color=color, radius=3).add_to(m)
 
 
 
-    m.save('map.html')
+#     m.save('map.html')
 
 
 

@@ -173,7 +173,7 @@ with tab1:
 
 
 
-#     m.save('map.html')
+    m.save('map.html')
 
 
 
@@ -183,6 +183,7 @@ with tab1:
     option = st.selectbox('지역(동) 선택',end['지역'].unique())
     end_selected = end.loc[(end['지역'] == option)]
     st.write(option, '데이터', end_selected)
+
 
 
 
@@ -329,5 +330,35 @@ with tab2:
 with tab3:   
     st.header('■ 측정 결과')
     st.markdown('### 1. 탄소 저감량')
+    co=pd.read_csv('streamlit/big_p/co.csv', encoding= 'cp949')
+
+        
+    
+    if st.checkbox('탄소저감량 데이터 보기'):
+        st.subheader('지역별(동) 탄소저감량')
+        st.dataframe(co)
+    
+    option = st.selectbox('지역(동) 선택',co['지역'].unique())
+
+    co_selected = co.loc[(co['지역'] == option)]
+
+    
+    co1 = co.T
+    co1 = co1.rename(columns=co1.iloc[0])
+    co1.drop('지역', inplace=True)
+
+    co_selected2 = st.line_chart(co1[option], use_container_width=True, height=330)
+    
+    
+    
+    st.write(option, '데이터', co_selected, co_selected2)    
+    
+
+#     st.write(option, '데이터', co_selected)
+    
+    
+    
+    
     st.markdown('### 2. 재활용률')
     st.markdown('### 3. 폐기량 변화량')
+    

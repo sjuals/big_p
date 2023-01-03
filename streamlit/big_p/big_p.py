@@ -73,16 +73,16 @@ with st.sidebar:
     ''')    
 
     
-st.title('다회용 컵 대여·반납기 솔루션')
+st.title('다회용품 사용 활성화를 위한 에코버스터즈')
     
     
     
     
-tab1, tab2, tab3 = st.tabs(['입지선정', '변수 분석', '측정 결과'])
+tab1, tab2, tab3 = st.tabs(['입지선정 및 기기 관리', '입지선정변수 시각화', '탄소저감량 현황'])
 
 with tab1:    
     # main
-    st.header('■ 다회용컵 대여·반납기 입지선정 분석')
+    st.header('■ 에코버스터즈 입지선정 분석')
 
     end = pd.read_csv('streamlit/big_p/end.csv', encoding='cp949')
     end.rename(columns={'y':'지수'}, inplace=True)
@@ -328,12 +328,11 @@ with tab2:
     
 
 with tab3:   
-    st.header('■ 측정 결과')
-    st.markdown('### 1. 탄소 저감량')
+    st.header('■ 탄소 저감량')
+#     st.markdown('### 1. 탄소 저감량')
     co=pd.read_csv('streamlit/big_p/co.csv', encoding= 'cp949')
 
         
-    
     if st.checkbox('탄소저감량 데이터 보기'):
         st.subheader('지역별(동) 탄소저감량')
         st.dataframe(co)

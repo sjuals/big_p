@@ -352,9 +352,9 @@ with tab3:
     co_selected2 = st.line_chart(co2, use_container_width=True, height=330)
     
 
-#     st.write(option, '데이터', co_selected, co_selected2)    
+    st.write(option, '데이터', co_selected, co_selected2)    
 
-    st.write(option, '데이터', co_selected)
+#     st.write(option, '데이터', co_selected)
     
     
     
